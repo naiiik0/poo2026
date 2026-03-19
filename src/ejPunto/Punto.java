@@ -11,8 +11,13 @@ public class Punto {
         this.y = y;
     }
     public int distanciaAlOrigen() {
-        return 0;
+        return (int) Math.sqrt(x*x + y*y);
     }
+    public void traslada(int desplX, int desplY) {
+        x = x + desplX;
+        y = y + desplY;
+    }
+
 
     @Override
     public boolean equals(Object o) {
