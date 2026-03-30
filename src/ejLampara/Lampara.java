@@ -8,7 +8,7 @@ public class Lampara {
     public Lampara(String marca, int potencia, Estado estado) {
         this.marca = marca;
         this.potencia = potencia;
-        this.estado = Estado.APAGADA;
+        this.estado = estado;
     }
 
     public String getMarca() {
@@ -32,5 +32,14 @@ public class Lampara {
 
     public void apagar() {
         this.estado = Estado.APAGADA;
+    }
+
+    @Override
+    public String toString() {
+        return "Lampara{" +
+                "marca='" + marca + '\'' +
+                ", potencia=" + potencia +
+                ", estado=" + estado +
+                '}';
     }
 }
