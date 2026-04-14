@@ -12,6 +12,6 @@ public class Mascota {
         System.out.println("La mascota hace: ");
     }
     public void mostrarInfo() {
-        System.out.println("Nombre: " + nombre + " y la edad es: " + edad);
+        System.out.println("Nombre " + nombre + " y la edad es " + edad);
     }
 }

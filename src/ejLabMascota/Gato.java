@@ -13,6 +13,6 @@ public class Gato extends Mascota {
 
     @Override
     public void mostrarInfo() {
-        System.out.println("Nombre: " + nombre + " y la edad es: " + edad + " y es de casa: " + esDeInterior);
+        System.out.println("Nombre " + nombre + " y la edad es " + edad + " y es de casa " + esDeInterior);
     }
 }

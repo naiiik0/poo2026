@@ -15,6 +15,6 @@ public class Perro extends Mascota {
 
     @Override
     public void mostrarInfo() {
-        System.out.println("El nombre es: " + nombre + " la edad es: " + edad + " y la raza es " + raza);
+        System.out.println("El nombre es " + nombre + " la edad es " + edad + " y la raza es " + raza);
     }
 }
