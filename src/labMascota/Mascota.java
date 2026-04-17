@@ -1,4 +1,4 @@
-package ejLabMascota;
+package labMascota;
 
 public class Mascota {
     protected String nombre;

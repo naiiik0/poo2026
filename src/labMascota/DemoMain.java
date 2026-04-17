@@ -1,4 +1,4 @@
-package ejLabMascota;
+package labMascota;
 
 public class DemoMain {
     public static void main(String[] args) {

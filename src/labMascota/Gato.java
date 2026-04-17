@@ -1,4 +1,4 @@
-package ejLabMascota;
+package labMascota;
 
 public class Gato extends Mascota {
     private boolean esDeInterior;

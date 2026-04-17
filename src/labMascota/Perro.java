@@ -1,4 +1,4 @@
-package ejLabMascota;
+package labMascota;
 
 public class Perro extends Mascota {
     private String raza;
