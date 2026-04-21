@@ -13,7 +13,7 @@ public class PrototipoLM extends CocheDeCarreras{
         if (sistemaHibrido == true) {
             System.out.println("El sistema es hibrido");
         } else if (sistemaHibrido == false) {
-            System.out.println("El sistema no es hibrido");
+            System.out.println("El sistema es de combustion");
         }
     }
 }
