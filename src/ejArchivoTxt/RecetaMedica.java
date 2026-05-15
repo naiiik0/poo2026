@@ -1,61 +1,45 @@
 package ejArchivoTxt;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class RecetaMedica {
-    private int numero;
-    private String fecha;
+    private int nroReceta;
     private String nombrePaciente;
-    private ArrayList<String> nombresMedicamentos;
+    private LocalDate fecha;
+    private ArrayList<String> nombreMedicamentos;
 
-    public RecetaMedica(int numero, String fecha, String nombrePaciente) {
-        this.numero = numero;
+    public RecetaMedica(int numero, String nombre, LocalDate fecha){
+        nroReceta =  numero;
+        nombrePaciente =  nombre;
         this.fecha = fecha;
-        this.nombrePaciente = nombrePaciente;
-        this.nombresMedicamentos = new ArrayList<>();
+        nombreMedicamentos =  new ArrayList<>();
     }
 
-    public int getNumero() {
-        return numero;
-    }
+    public int getNroReceta(){return nroReceta;}
+    public String getNombrePaciente(){return nombrePaciente;}
+    public LocalDate getFecha(){return fecha;}
 
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-    public String getNombrePaciente() {
-        return nombrePaciente;
-    }
-
-    public void setNombrePaciente(String nombrePaciente) {
-        this.nombrePaciente = nombrePaciente;
-    }
-
-    public int getNroMedicamentos() {
-        return nombresMedicamentos.size();
-    }
-
-    public boolean estaNombreMedicamento(String nombre) {
-        for (String m : nombresMedicamentos) {
-            if (m.equalsIgnoreCase(nombre)) {
+    public int getNroMedicamentos(){return nombreMedicamentos.size();}
+    public boolean estaNombreMedicamento(String nombreMedicamento){
+        for(String nombre: nombreMedicamentos){
+            if(nombre.equalsIgnoreCase(nombreMedicamento)){
                 return true;
             }
         }
         return false;
     }
-
-    public boolean addNombreMedicamento(String nombre) {
-        if (!estaNombreMedicamento(nombre)) {
-            return nombresMedicamentos.add(nombre);
+    public boolean addNombreMedicamento(String nomMedicamento){
+        for(String nombre: nombreMedicamentos){
+            if(nombre.equalsIgnoreCase(nomMedicamento)){
+                return false;
+            }
         }
-        return false;
+        return nombreMedicamentos.add(nomMedicamento);
     }
+    public String[] getNombreMedicamentos(){
+        return nombreMedicamentos.toArray(new String[0]);
+    }
+
+
 }

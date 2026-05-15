@@ -1,4 +1,3 @@
-RECETAS DEL AÑO 2022 QUE INCLUYEN MENTIX
-Nro Receta Nombre paciente               
-1          Julián González Plaza         
-Total recetas que incluyen Mentix: 1
+RECETAS DEL AÑO 2022 QUE INCLUYEN Mentix
+Nro Receta   Nombre paciente               
+1            Julián González Plaza         

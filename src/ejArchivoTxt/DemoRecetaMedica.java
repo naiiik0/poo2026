@@ -1,76 +1,76 @@
 package ejArchivoTxt;
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class DemoRecetaMedica {
-
     public static void main(String[] args) {
-        ArrayList<RecetaMedica> listaRecetas = new ArrayList<>();
-        int medicamentosRepetidos = 0;
-
-        File archivoRecetas = new File("recetas.txt");
-
-        try (Scanner lector = new Scanner(archivoRecetas)) {
-            if (lector.hasNextInt()) {
-                int cantidadAProcesar = lector.nextInt();
-                lector.nextLine();
-
-                for (int i = 0; i < cantidadAProcesar && lector.hasNextLine(); i++) {
-                    String linea = lector.nextLine();
-                    String[] partes = linea.split("-");
-
-                    if (partes.length >= 4) {
-                        int nro = Integer.parseInt(partes[0]);
-                        String fecha = partes[1];
-                        String paciente = partes[2];
-
-                        RecetaMedica receta = new RecetaMedica(nro, fecha, paciente);
-
-                        for (int j = 3; j < partes.length; j++) {
-                            String med = partes[j].trim();
-                            if (!receta.addNombreMedicamento(med)) {
-                                medicamentosRepetidos++;
-                            }
-                        }
-                        listaRecetas.add(receta);
-                    }
-                }
-            }
-
-            System.out.println("Numero de medicamentos repetidos y no incluidos: " + medicamentosRepetidos);
-
-            File archivoInforme = new File("informe.txt");
-            generarInforme(listaRecetas, archivoInforme);
-
+        String nombreArchivoLectura = "recetas.txt";
+        String nombreArchivoEscritura = "informe.txt";
+        ArrayList<RecetaMedica> misRecetas = new ArrayList<>();
+        File archivoRecetas =  new File(nombreArchivoLectura);
+        Scanner lector = null;
+        try {
+            lector = new Scanner(archivoRecetas);
         } catch (FileNotFoundException e) {
-            System.err.println("Error: El archivo " + archivoRecetas.getName() + " no existe.");
-            System.exit(1);
-        } catch (NumberFormatException e) {
-            System.err.println("Error: Datos numericos mal formados en el archivo.");
-            System.exit(1);
-        } catch (Exception e) {
-            System.err.println("Error critico: " + e.getMessage());
-            System.exit(1);
+            System.out.println("MATATE, NO EXISTE EL FILE");
         }
+        int numeroRecetasValidas =  lector.nextInt();
+        System.out.println("Numero Recetas validas: "+numeroRecetasValidas);
+        int cont = 0;
+        lector.nextLine(); //bota el salto de linea pendiente..
+        while (lector.hasNextLine() && cont < numeroRecetasValidas) {
+            String linea = lector.nextLine();
+            String[] partes = linea.split("-");
+
+            int numeroReceta = Integer.parseInt(partes[0]);
+            String fechaLeida = partes[1];
+            String nombrePaciente = partes[2];
+            // para configurar la fecha... dará excepción??...
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate fecha = LocalDate.parse(fechaLeida, formato);
+            //creo el objeto..
+            RecetaMedica medica =  new RecetaMedica(numeroReceta,nombrePaciente,fecha);
+
+            // System.out.println("Número receta: " + numeroReceta);
+            // System.out.println("Fecha: " + fecha);
+            // System.out.println("Paciente: " + nombrePaciente);
+
+            // System.out.println("Medicamentos:");
+            for (int i = 3; i < partes.length; i++) {
+                medica.addNombreMedicamento(partes[i]);
+                // System.out.println(" - " + partes[i]);
+            }
+            misRecetas.add(medica);
+            cont++;
+        }
+        lector.close();
+        generarReporte(2022, "Mentix",misRecetas);
+
     }
 
-    private static void generarInforme(ArrayList<RecetaMedica> recetas, File destino) {
-        int contadorMentix = 0;
-        try (PrintWriter escritor = new PrintWriter(new FileWriter(destino))) {
-            escritor.println("RECETAS DEL AÑO 2022 QUE INCLUYEN MENTIX");
-            escritor.printf("%-10s %-30s%n", "Nro Receta", "Nombre paciente");
-
-            for (RecetaMedica r : recetas) {
-                if (r.getFecha().endsWith("2022") && r.estaNombreMedicamento("Mentix")) {
-                    escritor.printf("%-10d %-30s%n", r.getNumero(), r.getNombrePaciente());
-                    contadorMentix++;
-                }
-            }
-
-            escritor.println("Total recetas que incluyen Mentix: " + contadorMentix);
-        } catch (IOException e) {
-            System.err.println("Error al escribir en: " + destino.getName());
-            System.exit(1);
+    static void generarReporte(int year, String nomMedicamento,ArrayList<RecetaMedica> misRecetas) {
+        //como generamos el reporte???
+        //primero, que seria mas facil??
+        File miArchivo = new File("informe.txt");
+        PrintStream escritor = null;
+        try {
+            escritor = new PrintStream(miArchivo);
+        } catch(FileNotFoundException e) {
+            System.out.println("No existe el archivo");
         }
+        escritor.println("RECETAS DEL AÑO " + year + " QUE INCLUYEN " + nomMedicamento);
+        escritor.printf("%-12s %-30s%n", "Nro Receta", "Nombre paciente");
+        for (RecetaMedica recet : misRecetas) {
+            int anio = recet.getFecha().getYear();
+            if(anio == 2022 && recet.estaNombreMedicamento("Mentix")) {
+                escritor.printf("%-12d %-30s%n",
+                        recet.getNroReceta(),
+                        recet.getNombrePaciente());
+            }
+        }
+
     }
 }
+
